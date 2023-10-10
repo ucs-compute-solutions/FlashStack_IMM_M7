@@ -27,10 +27,10 @@ The automation provided in this repo will enable you to deploy the following Fla
 
 ### Set up the execution environment
 To execute various ansible playbooks, a Linux based system will need to be setup as described in the CVD with the packages listed at the following pages: <br />
--	Cisco Intersight: https://galaxy.ansible.com/cisco/intersight <br />
--	Cisco NxOS: https://galaxy.ansible.com/cisco/nxos <br />
--	Pure FlashArray: https://galaxy.ansible.com/purestorage/flasharray <br />
--	VMware: https://galaxy.ansible.com/community/vmware <br />
+-	Cisco Intersight: https://galaxy.ansible.com/ui/repo/published/cisco/intersight/ <br />
+-	Cisco NxOS: https://galaxy.ansible.com/ui/repo/published/cisco/nxos/ <br />
+-	Pure FlashArray: https://galaxy.ansible.com/ui/repo/published/purestorage/flasharray/ <br />
+-	VMware: https://galaxy.ansible.com/ui/repo/published/community/vmware/ <br />
 
 You might already have this collection installed.
 

@@ -1,7 +1,6 @@
 ---
 # Gather various policy details which will be used to map policies to Server Profile Templates
 #
-# Get UUID Pool for Service Profile Template
 - name: "Get UUID Pool Details"
   vars:
     api_info: &api_info_uuid
@@ -19,7 +18,6 @@
 
   register: uuid_pool_details
 
-# Get BIOS Policy Details for Service Profile Template
 - name: "Get BIOS Policy Details"
   vars:
     api_info: &api_info_bios_policy
@@ -36,7 +34,6 @@
       $filter: "Name eq '{{ name_of_m7_bios_policy }}'"
   register:  bios_policy_details
 
-# Get FC Boot Order Policy for Service Profile Template if FC is being configured
 - name: "Get FC Boot Order Policy Details"
   vars:
     api_info: &api_info_fc_boot_policy
@@ -55,7 +52,6 @@
   register:  fc_boot_order_policy_details
   when: configure_fc == 'true'
 
-# Get iSCSI Boot Order Policy for Service Profile Template if iSCSI is being configured
 - name: "Get iSCSI Boot Order Policy Details"
   vars:
     api_info: &api_info_iscsi_boot_policy
@@ -73,7 +69,6 @@
   register:  iscsi_boot_order_policy_details
   when: configure_iscsi == 'true' 
 
-# Get IMC Access Policy for Service Profile Template
 - name: "Get IMC Access Policy Details"
   vars:
     api_info: &api_info_imc_access
@@ -91,7 +86,6 @@
 
   register:  imc_access_policy_details
 
-# Get IPMI over LAN Policy for Service Profile Template
 - name: "Get IPMI over LAN Policy Details"
   vars:
     api_info: &api_info_ipmi
@@ -109,10 +103,9 @@
 
   register:  ipmi_policy_details
 
-# Get Local User Policy for Service Profile Template
 - name: "Get Local User Policy Details"
   vars:
-    api_info: &api_info_LocalUser
+    api_info: &api_info_local_user
       api_private_key: "{{ intersight_api_private_key }}"
       api_key_id: "{{ intersight_api_key_id }}"
       api_uri: "{{ api_uri | default(omit) }}"
@@ -120,14 +113,13 @@
       state: "{{ state | default(omit) }}"
 
   intersight_rest_api:
-    <<: *api_info_LocalUser
+    <<: *api_info_local_user
     resource_path: /iam/EndPointUserPolicies
     query_params:
-      $filter: "Name eq '{{ name_of_LocalUser_policy }}'"
+      $filter: "Name eq '{{ name_of_local_user_policy }}'"
 
   register:  local_user_policy_details
 
-# Get KVM Policy for Service Profile Template
 - name: "Get KVM Policy Details"
   vars:
     api_info: &api_info_kvm
@@ -145,7 +137,6 @@
 
   register:  kvm_policy_details
 
-# Get Virtual Media Policy for Service Profile Template
 - name: "Get Virtual Media Policy Details"
   vars:
     api_info: &api_info_vmedia
@@ -163,7 +154,6 @@
 
   register:  vmedia_policy_details
 
-# Get FC LAN Connectivity Policy for Service Profile Template if iSCSI is being configured
 - name: "Get FC LAN Connectivity Policy Details"
   vars:
     api_info: &api_info_fc_lan_connectivity
@@ -182,7 +172,6 @@
   register:  fc_lan_connectivity_policy_details
   when: configure_fc == 'true' 
 
-# Get iSCSI LAN Connectivity Policy for Service Profile Template if FC is being configured
 - name: "Get iSCSI LAN Connectivity Policy Details"
   vars:
     api_info: &api_info_iscsi_lan_connectivity
@@ -200,7 +189,6 @@
   register:  iscsi_lan_connectivity_policy_details
   when: configure_iscsi == 'true' 
 
-# Get SAN Connectivity Policy for Service Profile Template if FC is being configured
 - name: "Get SAN Connectivity Policy Details"
   vars:
     api_info: &api_info_san_connectivity

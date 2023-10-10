@@ -1,6 +1,6 @@
 ---
-# Create Server Profile Template for iSCSI Boot from SAN
-- name: "Configure Server Profiles Template for iSCSI Boot"
+
+- name: "Create Server Profiles Template for iSCSI Boot from SAN"
   vars:
         api_info: &api_info_assign_iscsi
           api_private_key: "{{ intersight_api_private_key }}"

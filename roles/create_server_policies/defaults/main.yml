@@ -29,7 +29,7 @@ iscsi_boot_order_policy_description : "iSCSI Boot Order Policy - VIC-slot"
 description_of_ipmi_policy          : "Enable IPMI over LAN"
 
 # Local User Policy to enable KVM Access 
-description_of_LocalUser_policy      : "Allow Local Users in this policy KVM Access to Servers"
+description_of_local_user_policy      : "Allow Local Users in this policy KVM Access to Servers"
 
 # Ethernet QoS Policy
 description_of_ethernet_qos_policy   : "Ethernet QoS Policy setting MTU to 9000 and priority to Best Effort"

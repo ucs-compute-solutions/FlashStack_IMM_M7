@@ -10,8 +10,8 @@
 
   cisco.intersight.intersight_local_user_policy:
     <<: *api_info
-    name: "{{ name_of_LocalUser_policy }}"
-    description: "{{ description_of_LocalUser_policy }}"
+    name: "{{ name_of_local_user_policy }}"
+    description: "{{ description_of_local_user_policy }}"
     # tags:
     #   - Key: configmode
     #     Value: ansible
@@ -25,11 +25,13 @@
     always_update_password: true
     local_users:
       - username: "{{ name_of_local_user }}"
+        # role: "{{role_of_local user}}"
         role: admin
         password: "{{ password_for_local_user }}"
     organization: "{{ org_name }}"
-    # state: present
+    state: present
   register: local_user_policy
+  run_once: true
   
 # - name: "Configure Local User Policy"
 #   vars:
@@ -43,8 +45,8 @@
 #   - name: "LAN"
 #     cisco.intersight.intersight_local_user_policy:
 #       <<: *api_info
-#       name: "{{ name_of_LocalUser_policy }}"
-#       description: "{{ description_of_LocalUser_policy }}"
+#       name: "{{ name_of_local_user_policy }}"
+#       description: "{{ description_of_local_user_policy }}"
 #       # tags:
 #       #   - Key: configmode
 #       #     Value: ansible

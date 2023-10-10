@@ -1,5 +1,5 @@
 ---
-# Create  Server Profile Template for Converged Infrastrucure stack
+
 - name: "Create IMM Server Profile Template"
   vars:
     api_info: &api_info_org_moid
@@ -19,13 +19,13 @@
   run_once: true
 
 
-# Collect information about various policies to be programmed into the Templates
-- include_tasks: gather_policy_info.yml
+- name: Collect policy information for Service Profile Template
+  include_tasks: gather_policy_info.yml
 
-# Create Server Profile Template for FC
-- include_tasks: create_fc_server_profile_template.yml
+- name: Create Server Profile Template for FC storage
+  include_tasks: create_fc_server_profile_template.yml
   when: configure_fc == 'true'  
 
-# Create Server Profile Template for iSCSI
-- include_tasks: create_iscsi_server_profile_template.yml
+- name: Create Server Profile Template for iSCSI storage
+  include_tasks: create_iscsi_server_profile_template.yml
   when: configure_iscsi == 'true'  

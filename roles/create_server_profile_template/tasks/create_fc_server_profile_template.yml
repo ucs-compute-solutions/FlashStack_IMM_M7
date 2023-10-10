@@ -1,6 +1,6 @@
 ---
-# Create Server Profile Template for Fibre Channel Boot from SAN
-- name: "Configure Server Profile Template for Fibre Channel Boot"
+
+- name: "Configure Server Profile Template for FC Boot from SAN"
   vars:
         api_info: &api_info_assign_fc
           api_private_key: "{{ intersight_api_private_key }}"

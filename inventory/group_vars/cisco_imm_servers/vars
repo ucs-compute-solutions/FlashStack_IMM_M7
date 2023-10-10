@@ -152,8 +152,9 @@ name_of_vmedia_policy: "{{ prefix }}-vMedia_Policy"
 name_of_ipmi_policy: "{{ prefix }}-IPMI-LAN_Policy"
 
 # Local User Policy to enable KVM and IPMI Access
-name_of_LocalUser_policy: "{{ prefix }}-Local-User_Policy"
+name_of_local_user_policy: "{{ prefix }}-Local-Usr_Policy"
 name_of_local_user: "admin"
+role_of_local_user: admin
 password_for_local_user: "{{ vault_password_for_local_user }}"
 
 # Ethernet QoS Policy to set MTU 9000 and QoS Best Effort;
