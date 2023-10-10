@@ -1,10 +1,10 @@
 # FlashStack VSI CVD using Cisco UCS M7 servers, Pure Storage FlashArray, and VMware vSphere 8.0 
 
-The FlashStack portfolio of solutions are a series of validated solutions developed in partnership with Cisco and Pure Storage. Each FlashStack is designed, built, and validated in Cisco’s internal labs, and delivered as Cisco Validated Design (CVD) that includes a design guide, deployment guide and automation delivered as Infrastructure as Code (IaC).
+The FlashStack portfolio of solutions is a series of validated solutions developed in partnership with Cisco and Pure Storage. Each FlashStack is designed, built, and validated in Cisco’s internal labs, and delivered as Cisco Validated Design (CVD) that includes a design guide, deployment guide, and automation delivered as Infrastructure as Code (IaC).
 
 This release of the CVD introduces support for the 7th generation of Cisco UCS C-Series and Cisco UCS X-Series Servers, powered using 4th Gen Intel Xeon Scalable processors. The new Cisco UCS servers provide the compute infrastructure for the FlashStack virtual server infrastructure (VSI) solution. For storage, the solution uses either 32Gbps Fibre Channel (FC) or 100Gbps IP/ethernet storage to access unified block and file storage on a Pure Storage FlashArray. For the virtualization layer of the stack, the solution introduces support for VMware vSphere 8.0 and the new capabilities available in this release. 
 
-This repository provides the IaC automation for provisioning Cisco, Pure Storage and VMware components in this CVD solution:
+This repository provides the IaC automation for provisioning the end-to-end infrastructure in this CVD solution:
 https://www.cisco.com/c/en/us/td/docs/unified_computing/ucs/UCS_CVDs/flashstack_m7_vmware_8_ufs_fc.html
 
 This repository contains the Ansible playbooks to automate the following components in the Virtual Server Infrastructure stack: <br />
@@ -13,7 +13,7 @@ This repository contains the Ansible playbooks to automate the following compone
 &emsp;&emsp; •	 Pure FlashArray   <br />
 &emsp;&emsp; •	 VMware ESXi and VMware vCenter.  <br />
 
-The automation provided in this repo will enable you to deploy the following FlashStack designs in the CVD lusing Ansible. To execute the playbooks, the following FlashStack solution design must be built and cabled as shown in the figure below. The automation does provide the flexibility to provision either FC or IP/Ethernet for storage access.
+The automation provided in this repo will enable you to deploy the following FlashStack designs in the CVD using Ansible. To execute the playbooks, the following FlashStack solution design must be built and cabled as shown in the figure below. The automation does provide the flexibility to provision either FC or IP/Ethernet for storage access.
 
 ## FlashStack - Solution Topology
 
@@ -27,7 +27,7 @@ The automation provided in this repo will enable you to deploy the following Fla
 <br />
 
 ### Set up the execution environment
-To execute various ansible playbooks, a Linux based system will need to be setup as described in the CVD with the packages listed at the following pages: <br />
+To execute various Ansible playbooks, a Linux-based system will need to be setup as described in the CVD with the packages listed on the following pages: <br />
 -	Cisco Intersight: https://galaxy.ansible.com/cisco/intersight <br />
 -	Cisco NxOS: https://galaxy.ansible.com/cisco/nxos <br />
 -	Pure FlashArray: https://galaxy.ansible.com/purestorage/flasharray <br />
@@ -42,7 +42,7 @@ You might already have this collection installed.
   `ansible-galaxy collection install purestorage.flasharray` (Pure Storage FlashArray Collection) <br />
   `ansible-galaxy collection install community.vmware` (For VMWare Ansible Collection) <br />
 
-Next, clone the repository from Github with "git clone https://github.com/ucs-compute-solutions/FlashStack_IMM_M7.git".
+Next, clone the repository from GitHub with "git clone https://github.com/ucs-compute-solutions/FlashStack_IMM_M7.git".
 
 <br />
 
@@ -51,10 +51,11 @@ Next, clone the repository from Github with "git clone https://github.com/ucs-co
 To execute the automation in this repo, update the inventory and variables files to reflect the specifics of your environment. The variables that must be configured to execute the automation are defined in the following locations:
 
 1. Inventory file is located: inventory/inventory.ini file 
-2. Variable are distributed across multiple files. 
-&emsp;&emsp; •	Variables that require customer inputs are part of inventory/(group_vars|host_vars)/<component_name>/vars (and vault)
-&emsp;&emsp; •	Variables that do not typically require customer input (e.g. descriptions etc.) are present under role_name/defauls/main.yml.
-&emsp;&emsp; •	Intersight pools, policies and policies created using these playbooks will start with user_defined_prefix (for e.g. M7a) in the name and a tag of "Provisioned by: intersight-ansible" to quickly identify the ones created using Ansible.
+2. Variables are distributed across multiple files. 
+   - Variables that require customer inputs are part of `inventory/(group_vars|host_vars)/<component_name>/(vars|vault)`
+   - Variables that do not require customer input (e.g. descriptions etc.) are present under `role_name/defauls/main.yml`
+   - All UCS pools, policies, and policies created will use a user_specified_prefix (for e.g. M7a) in the name
+   - All Intersight driven configurations will use the tag: `Provisioned by: intersight-ansible` 
 
 <br />
 
@@ -80,7 +81,15 @@ To execute the automation in this repo, update the inventory and variables files
 
 <br />
 
-### Intersight Configuration and Access Requirement
+### Intersight API Access and Configuration
+
+To execute the playbooks against your Intersight account, you need to complete following additional steps of creating an API key and saving the Secrets_File:
+
+https://community.cisco.com/t5/data-center-and-cloud-documents/intersight-api-overview/ta-p/3651994
+
+The API key and Secrets.txt (default file name) should be put in the inventory/intersight/vault sub-directory and encrypted - these as well as passwords should also not be uploaded to GitHub by using the .gitignore file to filter out any files with sensitive information. 
+
+<br />
 
 The Intersight playbooks in this repository perform following functions:
 
@@ -89,14 +98,6 @@ The Intersight playbooks in this repository perform following functions:
 3. Create iSCSI and/or FC Server Profile Templates
 
 After successfully executing the playbooks, one or many server profiles can easily derived and attached to the compute node from Intersight dashboard.
-
-<br />
-
-To execute the playbooks against your Intersight account, you need to complete following additional steps of creating an API key and saving the Secrets_File:
-
-https://community.cisco.com/t5/data-center-and-cloud-documents/intersight-api-overview/ta-p/3651994
-
-The API key and Secrets.txt (default file name) should be put in the inventory/intersight/vault sub-directory and encrypted - these as well as passwords should also not be uploaded to GitHub by using the .gitignore file to filter out any files with sensitive information. 
 
 <br />
 
