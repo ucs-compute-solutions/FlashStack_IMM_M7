@@ -1,11 +1,11 @@
 ---
 
-#-------------------------------------------------------------------------------------
-#  Pre-requisites: Create Resource Group for FlashStack UCS cluster
-#-------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------
+#  Pre-requisites: Create Intersight Resource Group for FlashStack VSI cluster
+# -------------------------------------------------------------------------------------
 
-- name: Define anchor for Intersight API login info 
-  set_fact:
+- name: Define anchor for Intersight API login info
+  ansible.builtin.set_fact:
     intersight_api_login_info: &intersight_api_login_info
       api_private_key: "{{ intersight_api_private_key }}"
       api_key_id: "{{ intersight_api_key_id }}"
@@ -21,9 +21,9 @@
     query_params:
       $filter: "Name eq '{{ resource_group_name }}'"
     api_body: {
-      "Name":           "{{ resource_group_name }}",
-      "Description":    "{{ resource_group_description }}",
-      "Qualifier":      "Allow-Selectors",
+      "Name": "{{ resource_group_name }}",
+      "Description": "{{ resource_group_description }}",
+      "Qualifier": "Allow-Selectors",
       "Selectors": [
         {
           "ClassId": "resource.Selector",
@@ -36,12 +36,12 @@
   register: resource_group_response
   run_once: true
   delegate_to: local_host
-  tags: 
+  tags:
     - intersight_resource_group
-    #- never, debug, always
+    # - never, debug, always
 
 - name: Query for an existing Resource Group and get Moid
-  intersight_rest_api:
+  intersight_rest_api.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /resource/Groups
     query_params:
@@ -52,19 +52,19 @@
   tags:
     - intersight_resource_group
     - never
-    #- never, always, debug
+    # - never, always, debug
 
-- name: Moid for Resource Group 
-  set_fact:
+- name: Moid for Resource Group
+  ansible.builtin.set_fact:
     resource_group_moid: "{{ resource_group_response.api_response.Moid }}"
   run_once: true
   delegate_to: local_host
 
 - name: Print status of 'Create Resource' policy
-  debug:
-    msg: "Created Resource Group '{{ resource_group_name }}' with Moid: '{{ resource_group_moid }}'"  
-  tags: 
+  ansible.builtin.debug:
+    msg: "Created Resource Group '{{ resource_group_name }}' with Moid: '{{ resource_group_moid }}'"
+  tags:
     - intersight_resource_group
-    #- never, always, debug
+    # - never, always, debug
 
-#-----------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------

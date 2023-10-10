@@ -1,11 +1,11 @@
 ---
 
 # -------------------------------------------------------------------------------------
-#  Pre-requisites: Create Resource Group for HyperFlex cluster
+#  Pre-requisites: Create Intersight Organization for FlashStack VSI cluster
 # -------------------------------------------------------------------------------------
 
 - name: Define anchor for Intersight API login info
-  set_fact:
+  ansible.builtin.set_fact:
     intersight_api_login_info: &intersight_api_login_info
       api_private_key: "{{ intersight_api_private_key }}"
       api_key_id: "{{ intersight_api_key_id }}"
@@ -15,7 +15,7 @@
   run_once: true
 
 - name: Create Intersight Organization and return Moid
-  intersight_rest_api:
+  intersight_rest_api.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /organization/Organizations
     query_params:
@@ -39,7 +39,7 @@
     # - never, debug, always
 
 - name: Query for an existing Organization and return Moid
-  intersight_rest_api:
+  intersight_rest_api.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /organization/Organizations
     query_params:
@@ -52,14 +52,14 @@
     # - never
 
 - name: Moid for Organization
-  set_fact:
+  ansible.builtin.set_fact:
     organization_moid: "{{ organization_response.api_response.Moid }}"
   run_once: true
   delegate_to: local_host
   tags: intersight_organization
 
 - name: Print status of 'Create Organization' policy
-  debug:
+  ansible.builtin.debug:
     msg: "Created Organization '{{ organization_name }}' with Moid: '{{ organization_moid }}'"
   # tags: [never, debug, always]
   # --------------------------------------------------------------------------------------

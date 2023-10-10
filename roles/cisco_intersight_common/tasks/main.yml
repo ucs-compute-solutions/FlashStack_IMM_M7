@@ -1,10 +1,9 @@
 ---
 # Configuration Role for common Intersight functions
 #
-# Update server inventory
-- include_tasks: 31_intersight_update_inventory.yml
-# Create Resource Group
-- include_tasks: 32_intersight_create_resource_group.yml
-# Create Organization
-- include_tasks: 33_intersight_create_organization.yml
-
+- name: Update server inventory
+  ansible.builtin.include_tasks: 31_intersight_update_inventory.yml
+- name: Create Resource Group
+  ansible.builtin.include_tasks: 32_intersight_create_resource_group.yml
+- name: Create Organization
+  ansible.builtin.include_tasks: 33_intersight_create_organization.yml
