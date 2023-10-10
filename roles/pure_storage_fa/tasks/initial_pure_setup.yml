@@ -1,13 +1,13 @@
 ---
 - name: FlashStack Configuration | FlashArray | Set Array Name to {{ array_name }}
-  purefa_arrayname:
+  purestorage.flasharray.purefa_arrayname:
     name: "{{ array_name }}"
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
   when: initial_fa_config is defined
 
 # - name: FlashStack Configuration | FlashArray | DNS for {{ array_name }}
-#   purefa_dns:
+#   purestorage.flasharray.purefa_dns:
 #     domain: "{{ dns_domain }}"
 #     nameservers: "{{ dns_address }}"
 #     fa_url: "{{ fa_url }}"
@@ -15,14 +15,14 @@
 #   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | NTP for {{ array_name }}
-  purefa_ntp:
+  purestorage.flasharray.purefa_ntp:
     ntp_servers: "{{ ntp_servers }}"
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | SMTP for {{ array_name }}
-  purefa_smtp:
+  purestorage.flasharray.purefa_smtp:
     sender_domain: "{{ smtp_domain }}"
     relay_host: "{{ smtp_relay }}"
     fa_url: "{{ fa_url }}"
@@ -30,7 +30,7 @@
   when: initial_fa_config is defined and smtp_domain is defined and smtp_relay is defined
 
 - name: FlashStack Configuration | FlashArray | Pure1 Proxy for {{ array_name }}
-  purefa_proxy:
+  purestorage.flasharray.purefa_proxy:
     host: "{{ proxy_server }}"
     port: "{{ proxy_port }}"
     fa_url: "{{ fa_url }}"
@@ -38,28 +38,28 @@
   when: initial_fa_config is defined and proxy_server is defined and proxy_port is defined
 
 # - name: FlashStack Configuration | FlashArray | Alert Email for {{ array_name }}
-#   purefa_alert:
+#   purestorage.flasharray.purefa_alert:
 #     address: "{{ alert_address }}"
 #     fa_url: "{{ fa_url }}"
 #     api_token: "{{ fa_api_token }}"
 #   when: initial_fa_config is defined and alert_address is defined
 
 - name: FlashStack Configuration | FlashArray | Phone Home for {{ array_name }}
-  purefa_phonehome:
+  purestorage.flasharray.purefa_phonehome:
     state: "{{ phonehome }}"
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Remote Assist for {{ array_name }}
-  purefa_ra:
+  purestorage.flasharray.purefa_ra:
     state: "{{ remote_assist }}"
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Active Directory roles for {{ array_name }}
-  purefa_dsrole:
+  purestorage.flasharray.purefa_dsrole:
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
     role: "{{ ad_item.name }}"
@@ -83,7 +83,7 @@
   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Management Active Directory for {{ array_name }}
-  purefa_ds:
+  purestorage.flasharray.purefa_ds:
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
     enable: true
@@ -96,34 +96,34 @@
   when: initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Configure iSCSI interfaces for {{ array_name }}
-  purefa_network:
+  purestorage.flasharray.purefa_network:
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
     name: "{{ item.port }}"
     mtu: "{{ iscsi_mtu }}"
     gateway: "{{ iscsi_gateway }}"
     address: "{{ item.ip }}"
-    servicelist: 
+    servicelist:
       - iscsi
   with_items: "{{ interfaces_iscsi }}"
   when: configure_iscsi is defined and initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Configure FC interfaces for {{ array_name }}
-  purefa_network:
+  purestorage.flasharray.purefa_network:
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
     name: "{{ item.port }}"
-    servicelist: 
+    servicelist:
       - scsi-fc
   with_items: "{{ interfaces_fc }}"
   when: configure_fc is defined and initial_fa_config is defined
 
 - name: FlashStack Configuration | FlashArray | Configure FC-NVMe interfaces for {{ array_name }}
-  purefa_network:
+  purestorage.flasharray.purefa_network:
     fa_url: "{{ fa_url }}"
     api_token: "{{ fa_api_token }}"
     name: "{{ item.port }}"
-    servicelist: 
+    servicelist:
       - nvme-fc
   with_items: "{{ interfaces_fc_nvme }}"
   when: configure_fc_nvme is defined and initial_fa_config is defined
