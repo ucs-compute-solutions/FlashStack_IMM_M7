@@ -17,7 +17,8 @@ The automation provided in this repo will enable you to deploy the following Fla
 
 ## FlashStack - Solution Topology
 
-![image](https://github.com/ucs-compute-solutions/FlashStack_IMM_M7/assets/24396268/960946fd-2feb-4795-9781-7d1579560e01)
+![image](https://github.com/ucs-compute-solutions/FlashStack_IMM_M7/assets/24396268/83f8ebd7-a523-426e-9e5b-7bc537eb4755)
+
 <br />
 
 ## Solution Automation Overview
