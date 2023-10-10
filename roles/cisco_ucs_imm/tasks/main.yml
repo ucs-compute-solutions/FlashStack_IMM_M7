@@ -1,0 +1,10 @@
+---
+- name: Create server pools in Intersight
+  ansible.builtin.include_role:
+    name: create_pools
+- name: Create server policies in Intersight
+  ansible.builtin.include_role:
+    name: create_server_policies
+- name: Create server profile template in Intersight
+  ansible.builtin.include_role:
+    name: create_server_profile_template

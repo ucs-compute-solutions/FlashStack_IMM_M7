@@ -1,0 +1,96 @@
+---
+# ##############################################################################
+#
+#   VMware Configuration Parameters
+#
+# ##############################################################################
+
+
+# Provide the user names and passwords to connect to the ESXi ntp_servers
+# and VMware vCenter
+#
+vcenter_hostname: "10.119.2.241"
+vcenter_username: "{{ vault_vcenter_username }}"
+vcenter_password: "{{ vault_vcenter_password }}"
+
+esxi_username: "{{ vault_esxi_username }}"
+esxi_password: "{{ vault_esxi_password }}"
+
+vcenter_dc: "FSV_DC"
+vcenter_cluster: "FSV-M7a_CL"
+
+#
+# DVS Parameters; user version 7.0.0 for VMware 7.0U2 or above
+#
+dvs_name: "FSV-M7a-vDS0"
+dv_version: "8.0.0"
+dv_uplink: "2"
+dv_protocol: "lldp"
+dv_operation: "both"
+
+# ###############
+# NEW
+# Name is a prefix for the vlan name, actual name will include '_' and ID as suffix
+infra_vlans:
+  native_vlan:
+    id: 2
+    name: "FSV-NATIVE_VLAN"
+  ib-mgmt:
+    id: 1191
+    name: "FSV-IB-MGMT_VLAN"
+  ib-infra-mgmt:
+    id: 1192
+    name: "FSV-IB-INFRA-MGMT_VLAN"
+  vmotion:
+    id: 3000
+    name: "FSV-vMotion_VLAN"
+
+# make id a range or multiple non-contiguous values
+vm_network_vlans:
+  vm_network:
+    id: 1193
+    name: "FSV-VM-Network_VLAN"
+
+storage_vlans:
+  iscsi_a:
+    id: 3010
+    name: "FSV-iSCSI-A_VLAN"
+  iscsi_b:
+    id: 3020
+    name: "FSV-iSCSI-B_VLAN"
+  nvme_roce_a:
+    id: 3060
+    name: "FSV-NVMe-RoCE-A_VLAN"
+  nvme_roce_b:
+    id: 3070
+    name: "FSV-NVMe-RoCE-B_VLAN"
+
+
+# Storage iSCSI Target Interfaces
+#
+iscsi_ct0_a: "192.168.10.1"
+iscsi_ct0_b: "192.168.20.1"
+iscsi_ct1_a: "192.168.10.2"
+iscsi_ct1_b: "192.168.20.2"
+
+#
+vmotion_portgroup: "vMotion_PG_M7a"
+vm_network_portgroup_prefix: "VM-Network_PG"
+#
+
+vds0_vlan_list:
+  - name: "{{ vm_network_vlans['vm_network']['name'] }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ vm_network_portgroup_prefix }}_{{ vm_network_vlans['vm_network']['id'] }}"
+    id: "{{ vm_network_vlans['vm_network']['id'] }}"
+    active_uplinks:
+      - "Uplink 1"
+      - "Uplink 2"
+    standby_uplinks: []
+  - name: "{{ infra_vlans['vmotion']['name'] }}"
+    # portgroup name will be configured in VMware
+    portgroup_name: "{{ vmotion_portgroup }}"
+    id: "{{ infra_vlans['vmotion']['id'] }}"
+    active_uplinks: "Uplink 2"
+    standby_uplinks: "Uplink 1"
+

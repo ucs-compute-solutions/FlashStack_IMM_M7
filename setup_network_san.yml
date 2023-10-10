@@ -1,0 +1,9 @@
+---
+- name: Setup DC SAN network
+  hosts: cisco_network_san
+  connection: network_cli
+  gather_facts: false
+  vars_files:
+  roles:
+    - role: cisco_network_mds
+

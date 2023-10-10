@@ -1,0 +1,65 @@
+---
+
+# -------------------------------------------------------------------------------------
+#  Pre-requisites: Create Resource Group for HyperFlex cluster
+# -------------------------------------------------------------------------------------
+
+- name: Define anchor for Intersight API login info
+  set_fact:
+    intersight_api_login_info: &intersight_api_login_info
+      api_private_key: "{{ intersight_api_private_key }}"
+      api_key_id: "{{ intersight_api_key_id }}"
+      api_uri: "{{ intersight_api_uri | default(omit) }}"
+      validate_certs: "{{ intersight_validate_certs | default(omit) }}"
+      state: "{{ intersight_state | default(omit) }}"
+  run_once: true
+
+- name: Create Intersight Organization and return Moid
+  intersight_rest_api:
+    <<: *intersight_api_login_info
+    resource_path: /organization/Organizations
+    query_params:
+      $filter: "Name eq '{{ organization_name }}'"
+    api_body: {
+      "Name": "{{ organization_name }}",
+      "Description": "{{ organization_description }}",
+      "ResourceGroups": [
+        {
+          "Moid": "{{ resource_group_moid }}"
+        }
+      ]
+    }
+    state: present
+  register: organization_response
+  run_once: true
+  delegate_to: local_host
+  tags:
+    - intersight_organization
+    - never
+    # - never, debug, always
+
+- name: Query for an existing Organization and return Moid
+  intersight_rest_api:
+    <<: *intersight_api_login_info
+    resource_path: /organization/Organizations
+    query_params:
+      $filter: "Name eq '{{ organization_name }}'"
+  register: organization_response
+  run_once: true
+  delegate_to: local_host
+  tags:
+    - intersight_organization
+    # - never
+
+- name: Moid for Organization
+  set_fact:
+    organization_moid: "{{ organization_response.api_response.Moid }}"
+  run_once: true
+  delegate_to: local_host
+  tags: intersight_organization
+
+- name: Print status of 'Create Organization' policy
+  debug:
+    msg: "Created Organization '{{ organization_name }}' with Moid: '{{ organization_moid }}'"
+  # tags: [never, debug, always]
+  # --------------------------------------------------------------------------------------

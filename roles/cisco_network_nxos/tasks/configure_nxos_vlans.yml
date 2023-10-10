@@ -1,0 +1,47 @@
+---
+
+# NEW
+- name: Create VLANs
+  # vars:
+  #   - VLANS: "{{ all_vlans | ansible.builtin.combine(storage_vlans, infra_vlans, vm_network_vlans) }}"
+  cisco.nxos.nxos_vlans:
+    config:
+      - vlan_id: "{{ item.value.id }}"
+        name: "{{ item.value.name }}_{{ item.value.id }}"
+    state: merged
+  loop: "{{ {} | combine(storage_vlans, infra_vlans, vm_network_vlans, recursive=True) | dict2items }}"
+  # - "{{ storage_vlans | dict2items }}"
+  # - "{{ infra_vlans | dict2items }}"
+  # - "{{ vm_network_vlans | dict2items }}"
+
+
+# OLD - v1
+##
+# Configure VLANs on the Nexus Switches
+# ORIGINAL
+# - name: Create  VLANs
+#   cisco.nxos.nxos_vlans:
+#     config:
+#       - vlan_id: "{{ item.id }}"
+#         name: "{{ item.name }}"
+#     state: merged
+#   with_list: "{{ vlan_list }}"
+
+
+# OLD - v2
+# - name: Create Infra VLANs
+#   cisco.nxos.nxos_vlans:
+#     config:
+#       - vlan_id: "{{ item.value.id }}"
+#         name: "{{ item.value.name }}_{{ item.value.id }}"
+#     state: merged
+#   with_list: "{{ infra_vlans | dict2items }}"
+
+#   # NEW
+# - name: Create VM Network VLANs
+#   cisco.nxos.nxos_vlans:
+#     config:
+#       - vlan_id: "{{ item.value.id }}"
+#         name: "{{ item.value.name }}_{{ item.value.id }}"
+#     state: merged
+#   with_list: "{{ vm_network_vlans | dict2items }}"

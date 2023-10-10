@@ -1,0 +1,11 @@
+---
+# Add ESXi hosts to the vCenter Cluster and the vSphere Distributed Switch
+#
+- name: Add the ESXi hosts to the vCenter
+  ansible.builtin.include_tasks: add_esxi_hosts_to_VC.yml
+
+- name: Add the ESXi hosts to VDS
+  ansible.builtin.include_tasks: add_esxi_hosts_to_dvs.yml
+
+- name: Create vMotion VMK
+  ansible.builtin.include_tasks: add_esxi_vmotion_vmk.yml

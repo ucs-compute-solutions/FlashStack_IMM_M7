@@ -1,0 +1,91 @@
+---
+# Variables defined here are specific to MDS-A
+#
+
+#  Variables used to create port channel to UCS.
+#
+port_channel_id: 101
+port_channel_speed: "32000"
+port_channel_description: "AC09-UCS-FI-6536-A"
+
+#  VSAN number to use used for a the fabric being created
+#
+vsan_id: "{{ vsan_list[0].vsan_id}}"
+vsan_name: "{{ vsan_list[0].name}}"
+
+# The zone name and zoneset names used in the configuration
+zoneset_name: FSV-VSAN-A_ZoneSet
+fcp_zone_name: FSV-VSAN-A-FC-SCSI_Zone
+fc_nvme_zone_name: FSV-VSAN-A-FC-NVMe_Zone
+
+
+# Device alias list using device names and PWWNs from CVD.  Update the PWWNs to match your deployment
+# Any changes made to the device names will always need to be updated in the Zoning List below
+#
+fcp_device_alias_list:
+  - device_name: AC09-PureFAX50R3-CT0_FC0
+    pwwn: "{{ fcp_ct0_fc0 }}"
+    dev_type: target
+  - device_name: AC09-PureFAX50R3-CT1_FC0
+    pwwn: "{{ fcp_ct1_fc0 }}"
+    dev_type: target
+  - device_name: FSV-Host-11_vHBA-A
+    pwwn: "{{ ucs_host_11_a }}"
+    dev_type: initiator
+  # - device_name: VM-Host-Infra-FCP-02-A
+  #   pwwn: "{{ ucs_host_02_a }}"
+  #   dev_type: initiator
+  # - device_name: VM-Host-Infra-FCP-03-A
+  #   pwwn: "{{ ucs_host_03_a }}"
+  #   dev_type: initiator
+
+#
+fc_nvme_device_alias_list:
+  - device_name: AC09-PureFAX50R3-CT0_FC2
+    pwwn: "{{ fcp_ct0_fc2 }}"
+    dev_type: target
+  - device_name: AC09-PureFAX50R3-CT1_FC2
+    pwwn: "{{ fcp_ct1_fc2 }}"
+    dev_type: target
+  - device_name: FSV-Host-11_vHBA-NVMe-A
+    pwwn: "{{ ucs_nvme_host_11_a }}"
+    dev_type: initiator
+  # - device_name: VM-Host-Infra-FC-NVMe-02-A
+  #   pwwn: "{{ ucs_nvme_host_02_a }}"
+  #   dev_type: initiator
+  # - device_name: VM-Host-Infra-FC-NVMe-03-A
+  #   pwwn: "{{ ucs_nvme_host_03_a }}"
+  #   dev_type: initiator
+
+#
+# MDS Switch FC Interface List
+#
+storage_interface_list:
+  - interface: "fc1/5"
+    description: "AC09-Pure-FA-X50R3:CT0.FC0 (FC-SCSI)"
+    speed: "32000"
+  - interface: "fc1/6"
+    description: "AC09-Pure-FA-X50R3:CT1.FC0 (FC-SCSI)"
+    speed: "32000"
+  - interface: "fc1/7"
+    description: "AC09-Pure-FA-X50R3:CT0.FC2 (FC-NVMe)"
+    speed: "32000"
+  - interface: "fc1/8"
+    description: "AC09-Pure-FA-X50R3:CT1.FC2 (FC-NVMe)"
+    speed: "32000"
+
+ucs_interface_list:  
+  - interface: "fc1/1"
+    description: "AC09-UCS-FI-6536-A:fc1/36/1"
+    speed: "32000"
+  - interface: "fc1/2"
+    description: "AC09-UCS-FI-6536-A:fc1/36/2"
+    speed: "32000"
+  - interface: "fc1/3"
+    description: "AC09-UCS-FI-6536-A:fc1/36/3"
+    speed: "32000"
+  - interface: "fc1/4"
+    description: "AC09-UCS-FI-6536-A:fc1/36/4"
+    speed: "32000"
+
+

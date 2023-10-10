@@ -1,0 +1,21 @@
+---
+- name: Configure ESXi NTP server
+  community.vmware.vmware_host_ntp:
+    hostname: '{{ inventory_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    validate_certs: false
+    esxi_hostname: '{{ inventory_hostname }}'
+    ntp_servers: '{{ ntp_servers_list }}'
+  delegate_to: localhost
+
+- name: Start ESXi ntpd for the hosts
+  community.vmware.vmware_host_service_manager:
+    hostname: '{{ inventory_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    validate_certs: false
+    esxi_hostname: '{{ inventory_hostname }}'
+    service_name: ntpd
+    service_policy: false
+  delegate_to: localhost

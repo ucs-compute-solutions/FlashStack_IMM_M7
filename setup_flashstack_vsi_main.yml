@@ -1,0 +1,20 @@
+---
+
+# Note: You will need to collect FC WWPN or IP/Ethernet IQN info from UCS and Pure Storage once they're provisioned -and-
+# the corresponding variables files with this information.  Once both UCS and Pure Storage are provisioned, you will then 
+# need to provision MDS with this information for the following playbook to complete successfully. You will therefore need
+# to re-run this playbook after each update before the complete sequene of the following plays will succesfully execute 
+# and complete.
+
+- name: Setup Cisco Nexus DC network
+  ansible.builtin.import_playbook: setup_network.yml
+- name: Setup Cisco UCS compute
+  ansible.builtin.import_playbook: setup_compute.yml
+- name: Setup Pure Storage
+  ansible.builtin.import_playbook: setup_pure_storage.yml
+- name: Setup Cisco MDS SAN network
+  ansible.builtin.import_playbook: setup_network_san.yml
+- name: Setup VMware vCenter
+  ansible.builtin.import_playbook: setup_vmware_vcenter.yml
+- name: Setup VMware vSphere
+  ansible.builtin.import_playbook: setup_vmware_esxi.yml

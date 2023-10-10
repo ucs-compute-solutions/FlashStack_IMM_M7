@@ -1,0 +1,25 @@
+---
+# ##############################################################################
+#
+#   FlashArray Configuration Parameters
+#
+# ##############################################################################
+
+fa_url: 10.119.0.15
+fa_api_token: "{{ vault_fa_api_token }}"
+
+# Initial FlashArray Configuration, only define this if initial Pure FlashArray setup is required
+initial_fa_config: "yes"
+
+
+# Uncomment and update the the following line to setup Timezone
+time_zone: "America/New_York"
+
+
+# FC-NVMe Configuration, only define this if configure_fc is defined and fc-nvme configuration is required
+# ESXi does not support presenting VMFS storage via more than one protocol, so enabling NVMe will not override FC 
+# if both are provisioned. Creating a multi-protocol host object should be avoided on when using VMware ESXi
+
+# Use inventory file to enable this variable
+# configure_fc_nvme: "yes"
+

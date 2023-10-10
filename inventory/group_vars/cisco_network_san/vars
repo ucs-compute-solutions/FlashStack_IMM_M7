@@ -1,0 +1,55 @@
+---
+# ##############################################################################
+#
+#   Cisco MDS Configuration Parameters
+#
+# ##############################################################################
+
+ansible_connection: network_cli
+ansible_network_os: nxos
+#
+provider_ssh:
+  host: "{{ ansible_host }}"
+  username: "{{ ansible_username }}"
+  password: "{{ ansible_password }}"
+  transport: network_cli
+#
+ntp_servers:
+  - ip_address: "172.20.10.119"
+  - ip_address: "172.20.10.120"
+
+# VSAN Parameters
+#
+vsan_list:
+  - name: "FSV-VSAN-A"
+    vsan_id: "101"
+    fcoe_vlan: "101"
+    fabric: "A"
+  - name: "FSV-VSAN-B"
+    vsan_id: "102"
+    fcoe_vlan: "102"
+    fabric: "B"
+
+# Storage FC WWPNs (capture from storage system)
+#
+fcp_ct0_fc0: "52:4A:93:77:DE:D7:21:00"
+fcp_ct1_fc0: "52:4A:93:77:DE:D7:21:10"
+fcp_ct0_fc1: "52:4A:93:77:DE:D7:21:01"
+fcp_ct1_fc1: "52:4A:93:77:DE:D7:21:11"
+
+# Storage FC-NVMe WWPNs (capture from storage system)
+#
+fcp_ct0_fc2: "52:4A:93:77:DE:D7:21:02"
+fcp_ct1_fc2: "52:4A:93:77:DE:D7:21:12"
+fcp_ct0_fc3: "52:4A:93:77:DE:D7:21:03"
+fcp_ct1_fc3: "52:4A:93:77:DE:D7:21:13"
+
+# UCS FC WWPNs (capture from the UCS Service Profiles)
+#
+ucs_host_11_a: "20:00:00:b4:ac:09:0a:02"
+ucs_host_11_b: "20:00:00:b4:ac:09:0b:02"
+
+# UCS FC-NVMe WWPNs (capture from the UCS Service Profiles)
+#
+ucs_nvme_host_11_a: "20:00:00:b4:ac:09:0a:03"
+ucs_nvme_host_11_b: "20:00:00:b4:ac:09:0b:03"

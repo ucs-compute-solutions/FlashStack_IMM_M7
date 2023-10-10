@@ -1,0 +1,126 @@
+---
+- name: "Create IP Address Pool for In-Band (IB) management Access"
+  vars:
+    api_info: &api_info
+      api_private_key: "{{ intersight_api_private_key }}"
+      api_key_id: "{{ intersight_api_key_id }}"
+      api_uri: "{{ api_uri | default(omit) }}"
+      validate_certs: "{{ validate_certs | default(omit) }}"
+      state: "{{ state | default(omit) }}"
+
+    ib_ip_block: {
+      "From": "{{ ip_pool_start_for_ib_management_access }}",
+      "Size": "{{ size_of_ip_pool_for_ib_management_access }}"
+     }
+    oob_ip_block: {
+      "From": "{{ ip_pool_start_for_oob_management_access }}",
+      "Size": "{{ size_of_ip_pool_for_oob_management_access }}"
+     }
+  block:
+    - name: "Create IP Address Pool for In-Band (IB) management Access"
+      cisco.intersight.intersight_rest_api:
+          <<: *api_info
+          resource_path: /ippool/Pools
+          query_params:
+            $filter: "Name eq '{{ name_of_ip_pool_for_ib_management_access }}'"
+          api_body: {
+            "Name": "{{ name_of_ip_pool_for_ib_management_access }}",
+            "Description": "{{ description_of_ip_pool_for_ib_mgmt_access }}",
+            "IpV4Config": {
+              "Netmask": "{{ netmask_ib_mgmt }}",
+              "Gateway": "{{ gateway_ib_mgmt }}",
+              "PrimaryDns": "{{ primary_dns_ib_mgmt }}",
+              "SecondaryDns": "{{ secondary_dns_ib_mgmt }}"
+              },
+            "IpV4Blocks": [ "{{ ib_ip_block }}" ],
+            "AssignmentOrder": default,
+            "Organization": {
+              "Moid": "{{ intersight_org.api_response.Moid }}"
+            },
+            Tags: [{Key: "Provisioned by:", Value: "Intersight-Ansible"},{Key: "Project:", Value: "FSV-{{ prefix }}"}]
+          }
+      register: ib_management_ip_pool
+
+    - name: "Create IP Address Pool for Out-of-Band (OOB) management Access"
+      cisco.intersight.intersight_rest_api:
+          <<: *api_info
+          resource_path: /ippool/Pools
+          query_params:
+            $filter: "Name eq '{{ name_of_ip_pool_for_oob_management_access }}'"
+          api_body: {
+            "Name": "{{ name_of_ip_pool_for_oob_management_access }}",
+            "Description": "{{ description_of_ip_pool_for_oob_mgmt_access }}",
+            "IpV4Config": {
+              "Netmask": "{{ netmask_oob_mgmt }}",
+              "Gateway": "{{ gateway_oob_mgmt }}",
+              "PrimaryDns": "{{ primary_dns_oob_mgmt }}",
+              "SecondaryDns": "{{ secondary_dns_oob_mgmt }}"
+              },
+            "IpV4Blocks": [ "{{ oob_ip_block }}" ],
+            "AssignmentOrder": default,
+            "Organization": {
+              "Moid": "{{ intersight_org.api_response.Moid }}"
+            },
+            Tags: [{Key: "Provisioned by:", Value: "Intersight-Ansible"},{Key: "Project:", Value: "FSV-{{ prefix }}"}]
+          }
+      register: oob_management_ip_pool
+
+  # cisco.intersight.intersight_rest_api:
+  #   <<: *api_info
+  #   resource_path: /ippool/Pools
+  #   query_params:
+  #      $filter: "Name eq '{{ name_of_ip_pool_for_ib_management_access }}'"
+  #   api_body: {
+  #     "Name": "{{ name_of_ip_pool_for_ib_management_access }}",
+  #     "Description": "{{ description_of_ip_pool_for_ib_mgmt_access }}",
+  #     "IpV4Config": {
+  #       "Netmask": "{{ netmask_ib_mgmt }}",
+  #       "Gateway": "{{ gateway_ib_mgmt }}",
+  #       "PrimaryDns": "{{ primary_dns_ib_mgmt }}",
+  #       "SecondaryDns": "{{ secondary_dns_ib_mgmt }}"
+  #       },
+  #     "IpV4Blocks": [ "{{ ib_ip_block }}" ],
+  #     "AssignmentOrder": default,
+  #     "Organization": {
+  #        "Moid": "{{ intersight_org.api_response.Moid }}"
+  #      },
+  #     Tags: [{Key: "Provisioned by:", Value: "Intersight-Ansible"},{Key: "Project:", Value: "FSV-{{ prefix }}"}]
+  #    }
+  # register: ib_management_ip_pool
+
+# - name: "Create IP Address Pool for Out-of-Band (OOB) management Access"
+#   vars:
+#     api_info: &api_info_two
+#       api_private_key: "{{ intersight_api_private_key }}"
+#       api_key_id: "{{ intersight_api_key_id }}"
+#       api_uri: "{{ api_uri | default(omit) }}"
+#       validate_certs: "{{ validate_certs | default(omit) }}"
+#       state: "{{ state | default(omit) }}"
+
+#     oob_ip_block: {
+#       "From": "{{ ip_pool_start_for_oob_management_access }}",
+#       "Size": "{{ size_of_ip_pool_for_oob_management_access }}"
+#      }
+
+#   cisco.intersight.intersight_rest_api:
+#     <<: *api_info_two
+#     resource_path: /ippool/Pools
+#     query_params:
+#        $filter: "Name eq '{{ name_of_ip_pool_for_oob_management_access }}'"
+#     api_body: {
+#       "Name": "{{ name_of_ip_pool_for_oob_management_access }}",
+#       "Description": "{{ description_of_ip_pool_for_oob_mgmt_access }}",
+#       "IpV4Config": {
+#         "Netmask": "{{ netmask_oob_mgmt }}",
+#         "Gateway": "{{ gateway_oob_mgmt }}",
+#         "PrimaryDns": "{{ primary_dns_oob_mgmt }}",
+#         "SecondaryDns": "{{ secondary_dns_oob_mgmt }}"
+#         },
+#       "IpV4Blocks": [ "{{ oob_ip_block }}" ],
+#       "AssignmentOrder": default,
+#       "Organization": {
+#          "Moid": "{{ intersight_org.api_response.Moid }}"
+#        },
+#       Tags: [{Key: "Provisioned by:", Value: "Intersight-Ansible"},{Key: "Project:", Value: "FSV-{{ prefix }}"}]
+#      }
+#   register: oob_management_ip_pool

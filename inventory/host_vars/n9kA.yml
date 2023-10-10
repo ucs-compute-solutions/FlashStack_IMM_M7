@@ -1,0 +1,97 @@
+---
+vpc_source: 10.119.0.3
+vpc_destination:  10.119.0.4
+vpc_role_priority: "10"
+iscsi_vlan: "3010"
+vpc_domain_id: "10"
+
+# If using N9k-A for NTP Distribution via IB-MGMT VLAN
+# IB_MGMT_ntp_dist_IP: "{{ ib_mgmt_ntp_servers[0].ip_address }}{{ ntp_distribution_nm_cidr }}"
+# Interface Lists; more interfaces can be added for additional BW
+
+uplink_interface_list:
+  - interface: "Ethernet1/93"
+    description: "vPC to Upstream Network (Nexus-Core-1:p1/29)"
+  - interface: "Ethernet1/94"
+    description: "vPC to Upstream Network (Nexus-Core-2:p1/29)"
+
+peerlink_interface_list:
+  - interface: "Ethernet1/101"
+    description: "AC09-N93360YC-FX2-2:Eth1/101"
+  - interface: "Ethernet1/102"
+    description: "AC09-N93360YC-FX2-2:Eth1/102"
+
+FI_A_interface_list:
+  - interface: "Ethernet1/97"
+    description: "AC09-UCS-6536-FI-A:Eth1/31"
+
+FI_B_interface_list:
+  - interface: "Ethernet1/98"
+    description: "AC09-UCS-6536-FI-B:Eth1/31"
+
+# temp
+# storage_interface_list:
+#   - interface: "Ethernet1/95"
+#     description: "AC09-Pure-FA-X50R3:CT0.eth4"
+#   - interface: "Ethernet1/96"
+#     description: "AC09-Pure-FA-X50R3:CT1.eth4"
+#   - interface: "Ethernet1/103"
+#     description: "AC09-Pure-FA-X50R3:CT0.eth14"
+#   - interface: "Ethernet1/104"
+#     description: "AC09-Pure-FA-X50R3:CT1.eth14"
+# NEW
+storage_interface_list:
+  - interface: "Ethernet1/95"
+    description: "AC09-Pure-FA-X50R3:CT0.eth4"
+    vlan: "{{ storage_vlans['iscsi_a']['id'] }}"
+  - interface: "Ethernet1/96"
+    description: "AC09-Pure-FA-X50R3:CT1.eth4"
+    vlan: "{{ storage_vlans['iscsi_a']['id'] }}"
+  - interface: "Ethernet1/103"
+    description: "AC09-Pure-FA-X50R3:CT0.eth14"
+    vlan: "{{ storage_vlans['nvme_roce_a']['id'] }}"
+  - interface: "Ethernet1/104"
+    description: "AC09-Pure-FA-X50R3:CT1.eth14"
+    vlan: "{{ storage_vlans['nvme_roce_a']['id'] }}"
+#
+
+all_interfaces: "{{ uplink_interface_list + peerlink_interface_list + FI_A_interface_list + FI_B_interface_list + nexus_a_storage_interface_list }}"
+
+
+# VPC Parameters
+#
+
+uplink_PC:
+  - interface: "port-channel119"
+    # id must be same as port-channel number
+    id: "119"
+    speed: "auto"
+    duplex: "auto"
+    description: "vPC to Upstream Network (Nexus-Core-1:p1/29, Nexus-Core-2:p1/29)"
+#
+peerlink_PC:
+  - interface: "port-channel100"
+    # id must be same as port-channel number
+    id: "100"
+    speed: "auto"
+    duplex: "auto"
+    description: "vPC Peer Link to Nexus Peer switch" 
+#
+FI_A_PC:
+  - interface: "port-channel101"
+    # id must be same as port-channel number
+    id: "101"
+    speed: "auto"
+    duplex: "auto"
+    description: "vPC to AC09-6536-FI-A"
+#
+FI_B_PC:
+  - interface: "port-channel102"
+    # id must be same as port-channel number
+    id: "102"
+    speed: "auto"
+    duplex: "auto"
+    description: "vPC to AC09-6536-FI-B"
+#
+all_port_channels: "{{ peerlink_PC + uplink_PC + FI_A_PC + FI_B_PC }}"
+#

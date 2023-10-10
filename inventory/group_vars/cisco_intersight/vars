@@ -1,0 +1,34 @@
+---
+# ##############################################################################
+#
+#   Cisco Intersight Configuration Parameters
+#
+# ##############################################################################
+
+# This file defines Intersight global parameters.
+
+# !!! Sensitive Data should be encrypted using Ansible Vault. 
+# These variables will have a name that starts with 'vault_'
+
+# Enter Intersight API Key ID and the location of the SecretKey file 
+intersight_api_private_key: "{{ vault_intersight_api_private_key }}"
+intersight_api_key_id: "{{ vault_intersight_api_key_id }}"
+# intersight_validate_certs: "false"
+# 
+# Intersight Resource Group Name. Please make sure it already exists.
+resource_group_name: "FSV-M7a_RG"
+resource_group_description: "FlashStack M7 Resource Group"
+# 
+# 
+# Intersight Organization Name. Please make sure it already exists.
+organization_name: "FSV-M7_ORG"
+organization_description: "FlashStack Organization"
+org_name: "{{ organization_name }}"
+# 
+
+ntp_servers:
+  - "172.20.10.120"
+
+dns_servers:
+  - "172.20.4.53"
+  - "172.20.4.54"

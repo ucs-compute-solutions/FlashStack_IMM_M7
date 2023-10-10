@@ -1,0 +1,11 @@
+---
+- name: Set ESXi Power Management Policy to balanced
+  community.vmware.vmware_host_powermgmt_policy:
+    hostname: '{{ inventory_hostname }}'
+    username: '{{ esxi_username }}'
+    password: '{{ esxi_password }}'
+    validate_certs: false
+    esxi_hostname: '{{ inventory_hostname }}'
+    # other options: high-performance, low-power, custom
+    policy: balanced
+  delegate_to: localhost
