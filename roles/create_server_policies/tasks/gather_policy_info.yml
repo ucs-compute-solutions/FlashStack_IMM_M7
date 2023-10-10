@@ -2,7 +2,6 @@
 # Gather various policy details to evaluate for existence of Boot Order policy, LAN 
 # Connectivty Policy, and SAN Connectivity Policy.
 #
-# Get FC Boot Order Policy for Service Profile Template if FC is being configured
 - name: "Get FC Boot Order Policy Details"
   vars:
     api_info: &api_info_fc_boot_policy
@@ -21,7 +20,6 @@
   register:  fc_boot_order_policy_details
   when: configure_fc == 'true'
 
-# Get iSCSI Boot Order Policy for Service Profile Template if iSCSI is being configured
 - name: "Get iSCSI Boot Order Policy Details"
   vars:
     api_info: &api_info_iscsi_boot_policy
@@ -39,7 +37,6 @@
   register:  iscsi_boot_order_policy_details
   when: configure_iscsi == 'true' 
 
-# Get FC LAN Connectivity Policy for Service Profile Template if iSCSI is being configured
 - name: "Get FC LAN Connectivity Policy Details"
   vars:
     api_info: &api_info_fc_lan_connectivity
@@ -58,7 +55,6 @@
   register:  fc_lan_connectivity_policy_details
   when: configure_fc == 'true' 
 
-# Get iSCSI LAN Connectivity Policy for Service Profile Template if FC is being configured
 - name: "Get iSCSI LAN Connectivity Policy Details"
   vars:
     api_info: &api_info_iscsi_lan_connectivity
@@ -76,7 +72,6 @@
   register:  iscsi_lan_connectivity_policy_details
   when: configure_iscsi == 'true' 
 
-# Get SAN Connectivity Policy for Service Profile Template if FC is being configured
 - name: "Get SAN Connectivity Policy Details"
   vars:
     api_info: &api_info_san_connectivity
