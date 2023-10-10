@@ -1,19 +1,19 @@
 ---
 # Configuration Role for MDS.
 #
-# Configure Features
-- include_tasks: configure_mds_features.yml
-# Configure NTP Servers
-- include_tasks: configure_mds_ntp.yml
-# Configure Interface, Port-Channel and Trunk Settings
-- include_tasks: configure_mds_interfaces.yml
-# Configure vsan
-- include_tasks: configure_mds_vsans.yml
-# Configure Device Aliases
-- include_tasks: configure_mds_da.yml
-# Configure MDS Zone and Zoneset
-- include_tasks: configure_mds_zones.yml
-# Activate MDS Zoneset
-- include_tasks: activate_mds_zoneset.yml
-# Save Configuration
-- include_tasks: save_mds_config.yml
+- name: Configure Features
+  ansible.builtin.include_tasks: configure_mds_features.yml
+- name: Configure NTP Servers
+  ansible.builtin.include_tasks: configure_mds_ntp.yml
+- name: Configure Interface, Port-Channel and Trunk Settings
+  ansible.builtin.include_tasks: configure_mds_interfaces.yml
+- name: Configure vsan
+  ansible.builtin.include_tasks: configure_mds_vsans.yml
+- name: Configure Device Aliases
+  ansible.builtin.include_tasks: configure_mds_da.yml
+- name: Configure MDS Zone and Zoneset
+  ansible.builtin.include_tasks: configure_mds_zones.yml
+- name: Activate MDS Zoneset
+  ansible.builtin.include_tasks: activate_mds_zoneset.yml
+- name: Save Configuration
+  ansible.builtin.include_tasks: save_mds_config.yml

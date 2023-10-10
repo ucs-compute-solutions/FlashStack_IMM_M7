@@ -41,7 +41,7 @@
     # - never, debug, always
 
 - name: Query for an existing Resource Group and get Moid
-  intersight_rest_api.intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /resource/Groups
     query_params:

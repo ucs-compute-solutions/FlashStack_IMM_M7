@@ -8,7 +8,7 @@
       api_uri: "{{ api_uri | default(omit) }}"
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_org_moid
     resource_path: /organization/Organizations
     query_params:
@@ -20,12 +20,12 @@
 
 
 - name: Collect policy information for Service Profile Template
-  include_tasks: gather_policy_info.yml
+  ansible.builtin.include_tasks: gather_policy_info.yml
 
 - name: Create Server Profile Template for FC storage
-  include_tasks: create_fc_server_profile_template.yml
+  ansible.builtin.include_tasks: create_fc_server_profile_template.yml
   when: configure_fc == 'true'  
 
 - name: Create Server Profile Template for iSCSI storage
-  include_tasks: create_iscsi_server_profile_template.yml
+  ansible.builtin.include_tasks: create_iscsi_server_profile_template.yml
   when: configure_iscsi == 'true'  

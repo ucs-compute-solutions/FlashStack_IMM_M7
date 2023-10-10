@@ -3,7 +3,7 @@
 #
 # Initiate a configuration backup before making changes. The backup will be
 # stored in the  ~/ directory. Change the directory in ../defaults/main.yml
-- include_tasks: initiate_nxos_config_backup.yml
+- ansible.builtin.include_tasks: initiate_nxos_config_backup.yml
 
 - name: Configure Features
   ansible.builtin.include_tasks: configure_nxos_features.yml
@@ -15,9 +15,9 @@
   ansible.builtin.include_tasks: configure_nxos_vlans.yml
 
 # Configure NTP Distribution
-# - include_tasks: configure_nxos_ntp.yml
+# - ansible.builtin.include_tasks: configure_nxos_ntp.yml
 # Configure NTP Distribution Interface Default Gateway
-# - include_tasks: configure_default_gw.yml
+# - ansible.builtin.include_tasks: configure_default_gw.yml
 
 - name: Configure Interface, Port-Channel and Trunk Settings
   ansible.builtin.include_tasks: set_nxos_interfaces.yml

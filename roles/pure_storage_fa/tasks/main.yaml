@@ -1,6 +1,6 @@
 ---
-# Intial FlashArray Setup Policy
-- include_tasks: SetupPure.yml
+- name: Intial FlashArray Setup Policy
+  ansible.builtin.include_tasks: initial_pure_setup.yml
 
-# Configure FlashArray
-- include_tasks: ConfigPure.yml
+- name: Configure FlashArray
+  ansible.builtin.include_tasks: configure_pure_fa.yml

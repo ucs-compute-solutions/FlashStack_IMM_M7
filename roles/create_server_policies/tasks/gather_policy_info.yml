@@ -11,7 +11,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_fc_boot_policy
     resource_path: /boot/PrecisionPolicies
     query_params:
@@ -29,7 +29,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_iscsi_boot_policy
     resource_path: /boot/PrecisionPolicies
     query_params:
@@ -46,7 +46,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_fc_lan_connectivity
     resource_path: /vnic/LanConnectivityPolicies
     query_params:
@@ -64,7 +64,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_iscsi_lan_connectivity
     resource_path: /vnic/LanConnectivityPolicies
     query_params:
@@ -81,7 +81,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_san_connectivity
     resource_path: /vnic/SanConnectivityPolicies
     query_params:

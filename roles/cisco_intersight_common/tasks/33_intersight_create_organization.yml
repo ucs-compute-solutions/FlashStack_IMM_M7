@@ -15,7 +15,7 @@
   run_once: true
 
 - name: Create Intersight Organization and return Moid
-  intersight_rest_api.intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /organization/Organizations
     query_params:
@@ -39,7 +39,7 @@
     # - never, debug, always
 
 - name: Query for an existing Organization and return Moid
-  intersight_rest_api.intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *intersight_api_login_info
     resource_path: /organization/Organizations
     query_params:

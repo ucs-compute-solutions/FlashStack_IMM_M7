@@ -5,17 +5,17 @@
 # SSH must be enabled on the ESXi host
 #
 - name: Add the NTP Server(s) to the ESXi Hosts
-  include_tasks: add_esxi_ntp.yml
+  ansible.builtin.include_tasks: add_esxi_ntp.yml
 
 - name: Modify the vSwitch0 for ESXi Hosts to add redundant NIC and set MTU to 9000
-  include_tasks: modify_esxi_vswitch0.yml
+  ansible.builtin.include_tasks: modify_esxi_vswitch0.yml
 
 - name: Create the IB-MGMT Network Portgroup
-  include_tasks: create_esxi_ib_mgmt_PG.yml
+  ansible.builtin.include_tasks: create_esxi_ib_mgmt_PG.yml
 
 - name: Set ESXi Power Management Policy to High-Performance
-  include_tasks: set_esxi_powermgmt_policy.yml
+  ansible.builtin.include_tasks: set_esxi_powermgmt_policy.yml
   
 # - name: Upgrade or Install VIC Drivers  and UCS Tools
-#   include_tasks: upgrade_ESXi_drivers.yml
+#   ansible.builtin.include_tasks: upgrade_ESXi_drivers.yml
 #

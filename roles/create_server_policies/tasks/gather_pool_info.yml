@@ -9,7 +9,7 @@
       state: "{{ state | default(omit) }}"
   block:
     - name: Get IB-MGMT IP Pool
-      intersight_rest_api:
+      cisco.intersight.intersight_rest_api:
         <<: *api_info_ip_pool
         resource_path: /ippool/Pools
         query_params:
@@ -18,7 +18,7 @@
       register:  ib_management_ip_pool_details
     
     - name: Get OOB-MGMT IP Pool
-      intersight_rest_api:
+      cisco.intersight.intersight_rest_api:
         <<: *api_info_ip_pool
         resource_path: /ippool/Pools
         query_params:
@@ -35,7 +35,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_mac_a_pool
     resource_path: /macpool/Pools
     query_params:
@@ -52,7 +52,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_mac_b_pool
     resource_path: /macpool/Pools
     query_params:
@@ -69,7 +69,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_wwnn_pool
     resource_path: /fcpool/Pools
     query_params:
@@ -87,7 +87,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_wwpn_a_pool
     resource_path: /fcpool/Pools
     query_params:
@@ -105,7 +105,7 @@
       validate_certs: "{{ validate_certs | default(omit) }}"
       state: "{{ state | default(omit) }}"
 
-  intersight_rest_api:
+  cisco.intersight.intersight_rest_api:
     <<: *api_info_wwpn_b_pool
     resource_path: /fcpool/Pools
     query_params:
